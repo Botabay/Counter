@@ -6,17 +6,17 @@ import { useEffect, useState } from 'react'
 export const App = () => {
     const maxCount=5;
     const [countSt, setCountSt] = useState<number>(0);
-    // useEffect(()=>{
-    //     console.log('useEffect');
-    //     window.localStorage.setItem('myCounter',countSt.toString())
-    // },[countSt])
-    const toInc = () => {        
-        // if (countSt>=maxCount) {setCountSt(maxCount);}
-        // setCountSt(countSt+1);
+    useEffect(()=>{
+        console.log('useEffect');
+        window.localStorage.setItem('myCounter',countSt.toString())
+    },[countSt])
+    const toInc = () => {
         setCountSt(countSt >= maxCount ? maxCount : countSt+1)
+        //localStorage.setItem('myCounter',countSt.toString())
     }
     const toReset = () => {
         setCountSt(0);
+        // localStorage.setItem('myCounter',countSt.toString())
     }
     return (
         <div className="App">
