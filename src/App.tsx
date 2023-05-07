@@ -4,11 +4,16 @@ import { Button } from './components/Button'
 import { useEffect, useState } from 'react'
 
 export const App = () => {
-    const countSettings = {start:0,max:0};
-    const [countSt, setCountSt] = useState<number>(0);
+    let countSettings = {start:0,max:10};
+    const [countSt, setCountSt] = useState<number>(countSettings.start);
     useEffect(() => {
-        window.localStorage.setItem('myCounter', countSt.toString())
+        window.localStorage.setItem('myCounter', countSt.toString());
     }, [countSt])
+    // useEffect(() => {
+    //     setCountSt(countSettings.start);
+    //     console.log(countSettings);
+        
+    // }, [countSettings])
     const toInc = () => {
         setCountSt(countSt >= countSettings.max ? countSettings.max : countSt + 1)
         //localStorage.setItem('myCounter',countSt.toString())
@@ -18,16 +23,17 @@ export const App = () => {
         // localStorage.setItem('myCounter',countSt.toString())
     }
     const toSet=()=>{
-
+        countSettings={start:2,max:10};
+        setCountSt(countSettings.start);
     }
     return (
         <div className="App">
             <div className='settingsWindow'>
                 <div className='maxField'>
-                    <label>max value:</label> <input type="number" />
+                    <span>max value:</span> <input type="number" />
                 </div>
                 <div className='startField'>
-                    <label>start value:</label> <input type="number" />
+                    <span>start value:</span> <input type="number" />
                 </div>
                 <div>
                     <Button name={'set'} onClick={toSet} disabled={false} />
@@ -35,10 +41,10 @@ export const App = () => {
             </div>
             =======================
             <div className='counterWindow'>
-                <CountView count={countSt} />
+                <CountView count={countSt} error={countSt>=countSettings.max}/>
                 <div>
-                    <Button name={'inc'} onClick={toInc} disabled={countSt === 5} />
-                    <Button name={'reset'} onClick={toReset} disabled={countSt === 0} />
+                    <Button name={'inc'} onClick={toInc} disabled={countSt === countSettings.max} />
+                    <Button name={'reset'} onClick={toReset} disabled={countSt === countSettings.start} />
                 </div>
             </div>
         </div>
