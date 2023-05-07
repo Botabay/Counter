@@ -2,10 +2,12 @@ import './App.css';
 import { CountView } from './components/CountView'
 import { Button } from './components/Button'
 import { useEffect, useState } from 'react'
+import { error } from 'console';
 
 export const App = () => {
     let countSettings = {start:0,max:10};
     const [countSt, setCountSt] = useState<number>(countSettings.start);
+    let error= countSt>=countSettings.max || countSettings.start===countSettings.max || countSettings.max<0 || countSettings.start<0;
     useEffect(() => {
         window.localStorage.setItem('myCounter', countSt.toString());
     }, [countSt])
@@ -23,9 +25,10 @@ export const App = () => {
         // localStorage.setItem('myCounter',countSt.toString())
     }
     const toSet=()=>{
-        countSettings={start:2,max:10};
+        countSettings={start:2,max:12};
         setCountSt(countSettings.start);
     }
+    
     return (
         <div className="App">
             <div className='settingsWindow'>
@@ -41,7 +44,7 @@ export const App = () => {
             </div>
             =======================
             <div className='counterWindow'>
-                <CountView count={countSt} error={countSt>=countSettings.max}/>
+                <CountView count={countSt} error={error}/>
                 <div>
                     <Button name={'inc'} onClick={toInc} disabled={countSt === countSettings.max} />
                     <Button name={'reset'} onClick={toReset} disabled={countSt === countSettings.start} />
