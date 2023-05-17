@@ -4,7 +4,7 @@ import { Button } from './components/Button'
 import { useEffect, useState } from 'react'
 import { SettingsWindow } from './components/SettingsWindow'
 
-type SettingsType = {
+export type SettingsType = {
     minValue: number
     maxValue: number
     currentValue: number
@@ -30,12 +30,12 @@ export const App = () => {
         setSettingsSt({ ...settingsSt, currentValue: settingsSt.minValue });
         // localStorage.setItem('myCounter',countSt.toString())
     }
-    const callback = () => {
+    // const callback = () => {
 
-    }
+    // }
     return (
         <div className="App">
-            <SettingsWindow callback={callback} />
+            <SettingsWindow callback={setSettingsSt} state={settingsSt}/>
             <div className='counterWindow'>
                 <CountView count={settingsSt.currentValue} error={error} correctValue={true} />
                 <div>

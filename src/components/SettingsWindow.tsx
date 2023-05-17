@@ -1,14 +1,16 @@
-import { useState, ChangeEvent } from 'react'
+import { useState, ChangeEvent, Dispatch, SetStateAction } from 'react'
 import { Button } from './Button'
+import { SettingsType } from './../App'
 
 type ValuesType = {
     min: number
     max: number
 }
 type PropsType = {
-    callback: () => void
+    callback: Dispatch<SetStateAction<SettingsType>>//? need such typisaction
+    state:SettingsType
 }
-export const SettingsWindow = ({ callback }: PropsType) => {
+export const SettingsWindow = ({ callback,state }: PropsType) => {
     const [values, setValues] = useState<ValuesType>({ min: 0, max: 10 });
 
     const toSet = (e: ChangeEvent<HTMLInputElement>) => setValues({ ...values, max: Number(e.currentTarget.value) })
@@ -29,7 +31,7 @@ export const SettingsWindow = ({ callback }: PropsType) => {
                 />
             </div>
             <div>
-                <Button name={'set'} onClick={()=>callback()} disabled={false} />
+                <Button name={'set'} onClick={() => callback({...state})} disabled={false} />
             </div>
         </div>
     )
