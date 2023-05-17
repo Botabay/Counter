@@ -4,15 +4,16 @@ import { Button } from './components/Button'
 import { useEffect, useState } from 'react'
 
 type SettingsType={
-    start:number
-    max:number
+    minValue:number
+    maxValue:number
+    currentValue:number
 }
 export const App = () => {
     
     const [countSt, setCountSt] = useState<number>(0);
-    const [settingsSt, setSettingsSt] = useState<SettingsType>({ start: 0, max: 10 });
+    const [settingsSt, setSettingsSt] = useState<SettingsType>({ minValue: 0, maxValue: 10 ,currentValue:0});
 
-    let error = countSt >= settingsSt.max || settingsSt.start === settingsSt.max || settingsSt.max < 0 || settingsSt.start < 0;
+    let error = countSt >= settingsSt.maxValue || settingsSt.minValue === settingsSt.maxValue || settingsSt.maxValue < 0 || settingsSt.minValue < 0;
     useEffect(() => {
         window.localStorage.setItem('myCounter', countSt.toString());
     }, [countSt])
@@ -22,7 +23,7 @@ export const App = () => {
 
     // }, [countSettings])
     const toInc = () => {
-        setCountSt(countSt >= settingsSt.max ? settingsSt.max : countSt + 1)
+        setCountSt(countSt >= settingsSt.maxValue ? settingsSt.maxValue : countSt + 1)
         //localStorage.setItem('myCounter',countSt.toString())
     }
     const toReset = () => {
@@ -30,8 +31,7 @@ export const App = () => {
         // localStorage.setItem('myCounter',countSt.toString())
     }
     const toSet = () => {
-        // countSettings = { start: 2, max: 12 };
-        setCountSt(settingsSt.start);
+        setCountSt(settingsSt.minValue);
     }
 
     return (
@@ -39,7 +39,7 @@ export const App = () => {
             <div className='settingsWindow'>
                 <div className='maxField'>
                     <span>max value:</span>
-                    <input type="number" onChange={(e)=>setSettingsSt({...settingsSt,max:Number(e.currentTarget.value)})}/>
+                    <input type="number" onChange={(e)=>setSettingsSt({...settingsSt,maxValue:Number(e.currentTarget.value)})}/>
                 </div>
                 <div className='startField'>
                     <span>start value:</span>
@@ -56,12 +56,12 @@ export const App = () => {
                     <Button
                         name={'inc'}
                         onClick={toInc}
-                        disabled={countSt === settingsSt.max}
+                        disabled={countSt === settingsSt.maxValue}
                     />
                     <Button
                         name={'reset'}
                         onClick={toReset}
-                        disabled={countSt === settingsSt.start}
+                        disabled={countSt === settingsSt.minValue}
                     />
                 </div>
             </div>
