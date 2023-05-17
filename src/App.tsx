@@ -9,29 +9,27 @@ type SettingsType={
     currentValue:number
 }
 export const App = () => {
-    
-    const [countSt, setCountSt] = useState<number>(0);
     const [settingsSt, setSettingsSt] = useState<SettingsType>({ minValue: 0, maxValue: 10 ,currentValue:0});
 
-    let error = countSt >= settingsSt.maxValue || settingsSt.minValue === settingsSt.maxValue || settingsSt.maxValue < 0 || settingsSt.minValue < 0;
+    let error = settingsSt.currentValue >= settingsSt.maxValue || settingsSt.minValue === settingsSt.maxValue || settingsSt.maxValue < 0 || settingsSt.minValue < 0;
     useEffect(() => {
-        window.localStorage.setItem('myCounter', countSt.toString());
-    }, [countSt])
+        window.localStorage.setItem('myCounter', settingsSt.currentValue.toString());
+    }, [settingsSt.currentValue])
     // useEffect(() => {
     //     setCountSt(countSettings.start);
     //     console.log(countSettings);
 
     // }, [countSettings])
     const toInc = () => {
-        setCountSt(countSt >= settingsSt.maxValue ? settingsSt.maxValue : countSt + 1)
+        setSettingsSt(settingsSt.currentValue >= settingsSt.maxValue ? settingsSt.maxValue : settingsSt.currentValue + 1)
         //localStorage.setItem('myCounter',countSt.toString())
     }
     const toReset = () => {
-        setCountSt(0);
+        setSettingsSt(0);
         // localStorage.setItem('myCounter',countSt.toString())
     }
     const toSet = () => {
-        setCountSt(settingsSt.minValue);
+        setSettingsSt(settingsSt.minValue);
     }
 
     return (
@@ -51,17 +49,17 @@ export const App = () => {
             </div>
             =======================
             <div className='counterWindow'>
-                <CountView count={countSt} error={error} correctValue={true} />
+                <CountView count={settingsSt.currentValue} error={error} correctValue={true} />
                 <div>
                     <Button
                         name={'inc'}
                         onClick={toInc}
-                        disabled={countSt === settingsSt.maxValue}
+                        disabled={settingsSt.currentValue === settingsSt.maxValue}
                     />
                     <Button
                         name={'reset'}
                         onClick={toReset}
-                        disabled={countSt === settingsSt.minValue}
+                        disabled={settingsSt.currentValue === settingsSt.minValue}
                     />
                 </div>
             </div>
