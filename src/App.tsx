@@ -2,6 +2,7 @@ import './App.css';
 import { CountView } from './components/CountView'
 import { Button } from './components/Button'
 import { useEffect, useState } from 'react'
+import {SettingsWindow} from './components/SettingsWindow'
 
 type SettingsType = {
     minValue: number
@@ -26,29 +27,13 @@ export const App = () => {
         //localStorage.setItem('myCounter',countSt.toString())
     }
     const toReset = () => {
-        setSettingsSt({...settingsSt,currentValue:settingsSt.minValue});
+        setSettingsSt({ ...settingsSt, currentValue: settingsSt.minValue });
         // localStorage.setItem('myCounter',countSt.toString())
-    }
-    const toSet = () => {
-        setSettingsSt({...settingsSt,minValue:4,maxValue:7});//////????????/
     }
 
     return (
         <div className="App">
-            <div className='settingsWindow'>
-                <div className='maxField'>
-                    <span>max value:</span>
-                    <input type="number" onChange={(e) => setSettingsSt({ ...settingsSt, maxValue: Number(e.currentTarget.value) })} />
-                </div>
-                <div className='startField'>
-                    <span>start value:</span>
-                    <input type="number" />
-                </div>
-                <div>
-                    <Button name={'set'} onClick={toSet} disabled={false} />
-                </div>
-            </div>
-            =======================
+            <SettingsWindow />
             <div className='counterWindow'>
                 <CountView count={settingsSt.currentValue} error={error} correctValue={true} />
                 <div>
