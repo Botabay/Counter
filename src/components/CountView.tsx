@@ -1,14 +1,23 @@
-import { error } from 'console'
 import s from './CountView.module.css'
 type PropsType = {
     count: number
-    error:boolean
+    error: boolean
+    correctValue: boolean
 }
 
-export const CountView=(props:PropsType)=>{
+export const CountView = ({
+    count,
+    error,
+    correctValue
+}: PropsType) => {
     return (
-        <div className={s.based+' '+ (props.error && s.red)}>
-            {props.count}
+        <div className={s.based + ' ' + (error && s.red)}>
+            {count}
+
+            <p>
+                {(correctValue && 'enter values and press "set"')
+                    || (correctValue || 'incorrect value!')}
+            </p>
         </div>
     )
 }

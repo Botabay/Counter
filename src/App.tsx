@@ -2,41 +2,48 @@ import './App.css';
 import { CountView } from './components/CountView'
 import { Button } from './components/Button'
 import { useEffect, useState } from 'react'
-import { error } from 'console';
 
+type SettingsType={
+    start:number
+    max:number
+}
 export const App = () => {
-    let countSettings = {start:0,max:10};
-    const [countSt, setCountSt] = useState<number>(countSettings.start);
-    let error= countSt>=countSettings.max || countSettings.start===countSettings.max || countSettings.max<0 || countSettings.start<0;
+    
+    const [countSt, setCountSt] = useState<number>(0);
+    const [settingsSt, setSettingsSt] = useState<SettingsType>({ start: 0, max: 10 });
+
+    let error = countSt >= settingsSt.max || settingsSt.start === settingsSt.max || settingsSt.max < 0 || settingsSt.start < 0;
     useEffect(() => {
         window.localStorage.setItem('myCounter', countSt.toString());
     }, [countSt])
     // useEffect(() => {
     //     setCountSt(countSettings.start);
     //     console.log(countSettings);
-        
+
     // }, [countSettings])
     const toInc = () => {
-        setCountSt(countSt >= countSettings.max ? countSettings.max : countSt + 1)
+        setCountSt(countSt >= settingsSt.max ? settingsSt.max : countSt + 1)
         //localStorage.setItem('myCounter',countSt.toString())
     }
     const toReset = () => {
         setCountSt(0);
         // localStorage.setItem('myCounter',countSt.toString())
     }
-    const toSet=()=>{
-        countSettings={start:2,max:12};
-        setCountSt(countSettings.start);
+    const toSet = () => {
+        // countSettings = { start: 2, max: 12 };
+        setCountSt(settingsSt.start);
     }
-    
+
     return (
         <div className="App">
             <div className='settingsWindow'>
                 <div className='maxField'>
-                    <span>max value:</span> <input type="number" />
+                    <span>max value:</span>
+                    <input type="number" onChange={(e)=>setSettingsSt({...settingsSt,max:Number(e.currentTarget.value)})}/>
                 </div>
                 <div className='startField'>
-                    <span>start value:</span> <input type="number" />
+                    <span>start value:</span>
+                    <input type="number" />
                 </div>
                 <div>
                     <Button name={'set'} onClick={toSet} disabled={false} />
@@ -44,10 +51,18 @@ export const App = () => {
             </div>
             =======================
             <div className='counterWindow'>
-                <CountView count={countSt} error={error}/>
+                <CountView count={countSt} error={error} correctValue={true} />
                 <div>
-                    <Button name={'inc'} onClick={toInc} disabled={countSt === countSettings.max} />
-                    <Button name={'reset'} onClick={toReset} disabled={countSt === countSettings.start} />
+                    <Button
+                        name={'inc'}
+                        onClick={toInc}
+                        disabled={countSt === settingsSt.max}
+                    />
+                    <Button
+                        name={'reset'}
+                        onClick={toReset}
+                        disabled={countSt === settingsSt.start}
+                    />
                 </div>
             </div>
         </div>
