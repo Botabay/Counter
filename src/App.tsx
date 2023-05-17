@@ -3,13 +3,13 @@ import { CountView } from './components/CountView'
 import { Button } from './components/Button'
 import { useEffect, useState } from 'react'
 
-type SettingsType={
-    minValue:number
-    maxValue:number
-    currentValue:number
+type SettingsType = {
+    minValue: number
+    maxValue: number
+    currentValue: number
 }
 export const App = () => {
-    const [settingsSt, setSettingsSt] = useState<SettingsType>({ minValue: 0, maxValue: 10 ,currentValue:0});
+    const [settingsSt, setSettingsSt] = useState<SettingsType>({ minValue: 0, maxValue: 10, currentValue: 0 });
 
     let error = settingsSt.currentValue >= settingsSt.maxValue || settingsSt.minValue === settingsSt.maxValue || settingsSt.maxValue < 0 || settingsSt.minValue < 0;
     useEffect(() => {
@@ -21,15 +21,16 @@ export const App = () => {
 
     // }, [countSettings])
     const toInc = () => {
-        setSettingsSt(settingsSt.currentValue >= settingsSt.maxValue ? settingsSt.maxValue : settingsSt.currentValue + 1)
+        if (settingsSt.currentValue <= settingsSt.maxValue)
+            setSettingsSt({ ...settingsSt, currentValue: ++settingsSt.currentValue })
         //localStorage.setItem('myCounter',countSt.toString())
     }
     const toReset = () => {
-        setSettingsSt(0);
+        setSettingsSt({...settingsSt,currentValue:settingsSt.minValue});
         // localStorage.setItem('myCounter',countSt.toString())
     }
     const toSet = () => {
-        setSettingsSt(settingsSt.minValue);
+        setSettingsSt({...settingsSt,minValue:4,maxValue:7});//////????????/
     }
 
     return (
@@ -37,7 +38,7 @@ export const App = () => {
             <div className='settingsWindow'>
                 <div className='maxField'>
                     <span>max value:</span>
-                    <input type="number" onChange={(e)=>setSettingsSt({...settingsSt,maxValue:Number(e.currentTarget.value)})}/>
+                    <input type="number" onChange={(e) => setSettingsSt({ ...settingsSt, maxValue: Number(e.currentTarget.value) })} />
                 </div>
                 <div className='startField'>
                     <span>start value:</span>
