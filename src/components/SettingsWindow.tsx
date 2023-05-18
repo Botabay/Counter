@@ -56,16 +56,14 @@ export const SettingsWindow = ({
             <SettingField
                 text={'max value:'}
                 setErrorSt={setErrorSt}
-                setCountVisibilityMode={setCountVisibilityMode}
-                countVisibilityMode={countVisibilityMode}
                 onInputChangeHandler={onMaxInputChangeHandler}
+                value={values.max}
             />
             <SettingField
                 text={'min value:'}
                 setErrorSt={setErrorSt}
-                setCountVisibilityMode={setCountVisibilityMode}
-                countVisibilityMode={countVisibilityMode}
                 onInputChangeHandler={onMinInputChangeHandler}
+                value={values.min}
             />
             <div>
                 <Button name={'set'} onClick={toSet} disabled={disable} />
