@@ -26,7 +26,12 @@ export const CounterWindow = ({ countSt,
         === countSt.maxValue || countSt.maxValue < 0 || countSt.minValue < 0;
     return (
         <div className='counterWindow' >
-            <CountView countSt={countSt} error={error} countVisibilityMode={countVisibilityMode} errorSt={errorSt}/>
+            <CountView
+                countSt={countSt}
+                error={error}
+                countVisibilityMode={countVisibilityMode}
+                errorSt={errorSt}
+            />
             <div>
                 <Button
                     name={'inc'}

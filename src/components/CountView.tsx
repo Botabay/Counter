@@ -20,7 +20,7 @@ export const CountView = ({
         <div className={s.based + ' ' + (error && s.red)}>
             {
                 countVisibilityMode ? countSt.currentValue :
-                    errorSt ? GOOD_MESSAGE : WRONG_MESSAGE
+                    errorSt ? WRONG_MESSAGE : GOOD_MESSAGE
             }
         </div>
     )

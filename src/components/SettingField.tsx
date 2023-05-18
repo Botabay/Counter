@@ -3,7 +3,6 @@ import { ChangeEvent, Dispatch, SetStateAction } from 'react'
 
 type PropsType = {
     text: string
-    setErrorSt: Dispatch<SetStateAction<boolean>>
     onInputChangeHandler: (e: ChangeEvent<HTMLInputElement>) => void
     value: number
 }

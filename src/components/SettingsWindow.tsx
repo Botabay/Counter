@@ -8,7 +8,7 @@ type PropsType = {
     countSt: CountType
     countVisibilityMode: boolean
     setCountVisibilityMode: Dispatch<SetStateAction<boolean>>
-    // errorSt: boolean
+    errorSt: boolean
     setErrorSt: Dispatch<SetStateAction<boolean>>
 }
 type ValuesType = {
@@ -20,7 +20,7 @@ export const SettingsWindow = ({
     countSt,
     countVisibilityMode,
     setCountVisibilityMode,
-    // errorSt, 
+    errorSt, 
     setErrorSt
 }: PropsType) => {
     const [disable, setDisable] = useState<boolean>(false);
@@ -39,11 +39,11 @@ export const SettingsWindow = ({
         countVisibilityMode && setCountVisibilityMode(!countVisibilityMode)
     }
     const onMaxInputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setErrorSt(false);
         setDisable(false);
         if (values.max <= values.min) {
             setErrorSt(true);
         } else {
+            setErrorSt(false);
             setValues({ ...values, max: Number(e.currentTarget.value) })
         }
         countVisibilityMode && setCountVisibilityMode(!countVisibilityMode)
@@ -57,13 +57,11 @@ export const SettingsWindow = ({
         <div className='settingsWindow'>
             <SettingField
                 text={'max value:'}
-                setErrorSt={setErrorSt}
                 onInputChangeHandler={onMaxInputChangeHandler}
                 value={values.max}
             />
             <SettingField
                 text={'min value:'}
-                setErrorSt={setErrorSt}
                 onInputChangeHandler={onMinInputChangeHandler}
                 value={values.min}
             />
