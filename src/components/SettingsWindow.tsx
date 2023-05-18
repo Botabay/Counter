@@ -8,7 +8,6 @@ type PropsType = {
     countSt: CountType
     countVisibilityMode: boolean
     setCountVisibilityMode: Dispatch<SetStateAction<boolean>>
-    errorSt: boolean
     setErrorSt: Dispatch<SetStateAction<boolean>>
 }
 type ValuesType = {
@@ -20,13 +19,11 @@ export const SettingsWindow = ({
     countSt,
     countVisibilityMode,
     setCountVisibilityMode,
-    errorSt, 
     setErrorSt
 }: PropsType) => {
     const [disable, setDisable] = useState<boolean>(false);
     const [values, setValues] = useState<ValuesType>({ min: 1, max: 10 });
     const onMinInputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setErrorSt(false);
         setDisable(false);
         if (values.min < 0
             // || values.min >= values.max
@@ -34,7 +31,7 @@ export const SettingsWindow = ({
             setErrorSt(true);
         } else {
             setValues({ ...values, min: Number(e.currentTarget.value) })
-            //     setErrorSt(false);
+            setErrorSt(false);
         }
         countVisibilityMode && setCountVisibilityMode(!countVisibilityMode)
     }

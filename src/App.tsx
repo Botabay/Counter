@@ -26,7 +26,6 @@ export const App = () => {
                 countSt={countSt}
                 countVisibilityMode={countVisibilityMode}
                 setCountVisibilityMode={setCountVisibilityMode}
-                errorSt={errorSt}
                 setErrorSt={setErrorSt}
             />
             <CounterWindow

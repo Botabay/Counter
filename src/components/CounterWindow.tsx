@@ -22,13 +22,10 @@ export const CounterWindow = ({ countSt,
     const toReset = () => {
         setCountSt({ ...countSt, currentValue: countSt.minValue });
     }
-    let error = countSt.currentValue >= countSt.maxValue || countSt.minValue
-        === countSt.maxValue || countSt.maxValue < 0 || countSt.minValue < 0;
     return (
         <div className='counterWindow' >
             <CountView
                 countSt={countSt}
-                error={error}
                 countVisibilityMode={countVisibilityMode}
                 errorSt={errorSt}
             />
