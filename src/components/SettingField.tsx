@@ -40,7 +40,7 @@ export const SettingField = ({
             <span>{text}</span>
             <Input
                 onChange={onMaxInputChangeHandler}
-                values={values}
+                value={value}
             />
         </div>
     )
