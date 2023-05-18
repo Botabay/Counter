@@ -27,6 +27,7 @@ export const SettingsWindow = ({
     const [values, setValues] = useState<ValuesType>({ min: 1, max: 10 });
     const onMinInputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setErrorSt(false);
+        setDisable(false);
         if (values.min < 0
             // || values.min >= values.max
         ) {
@@ -39,6 +40,7 @@ export const SettingsWindow = ({
     }
     const onMaxInputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setErrorSt(false);
+        setDisable(false);
         if (values.max <= values.min) {
             setErrorSt(true);
         } else {
