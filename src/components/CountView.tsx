@@ -1,33 +1,20 @@
+import { CountType } from '../App'
 import s from './CountView.module.css'
+
 type PropsType = {
-    count: number
+    countSt: CountType
     error: boolean
-    correctValue: boolean
+    mode: boolean
 }
 
 export const CountView = ({
-    count,
+    countSt,
     error,
-    correctValue
+    mode
 }: PropsType) => {
     return (
         <div className={s.based + ' ' + (error && s.red)}>
-            {count}
-
-            <p>
-                {(correctValue && 'enter values and press "set"')
-                    || (correctValue || 'incorrect value!')}
-            </p>
+            {mode ? countSt.currentValue : countSt.maxValue > countSt.minValue ? 'enter values and press "set"' : 'incorrect value!'}
         </div>
     )
 }
-
-
-// export const CountView = (props: PropsType) => {
-//     const calcClassName = s.based + " " + (props.count === 5 && s.red);
-//     return (
-//         <div className={calcClassName}>
-//             {props.count}
-//         </div>
-//     )
-// }
