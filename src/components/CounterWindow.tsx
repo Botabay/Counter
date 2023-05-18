@@ -7,23 +7,26 @@ type PropsType = {
     countSt: CountType
     setCountSt: Dispatch<SetStateAction<CountType>>,
     mode: boolean
+    errorSt: boolean
 }
 
-export const CounterWindow = ({ countSt, setCountSt, mode }: PropsType) => {
+export const CounterWindow = ({ countSt,
+    setCountSt,
+    mode,
+    errorSt
+}: PropsType) => {
     const toInc = () => {
         if (countSt.currentValue <= countSt.maxValue)
             setCountSt({ ...countSt, currentValue: ++countSt.currentValue })
-        //localStorage.setItem('myCounter',countSt.toString())
     }
     const toReset = () => {
         setCountSt({ ...countSt, currentValue: countSt.minValue });
-        // localStorage.setItem('myCounter',countSt.toString())
     }
     let error = countSt.currentValue >= countSt.maxValue || countSt.minValue
         === countSt.maxValue || countSt.maxValue < 0 || countSt.minValue < 0;
     return (
         <div className='counterWindow' >
-            <CountView countSt={countSt} error={error} mode={mode} />
+            <CountView countSt={countSt} error={error} mode={mode} errorSt={errorSt}/>
             <div>
                 <Button
                     name={'inc'}

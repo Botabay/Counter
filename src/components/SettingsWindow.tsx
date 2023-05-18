@@ -11,12 +11,29 @@ type PropsType = {
     countSt: CountType
     mode: boolean
     setMode: Dispatch<SetStateAction<boolean>>
+    // errorSt: boolean
+    setErrorSt: Dispatch<SetStateAction<boolean>>
 }
-export const SettingsWindow = ({ callback, countSt, mode, setMode }: PropsType) => {
+export const SettingsWindow = ({
+    callback,
+    countSt,
+    mode,
+    setMode,
+    // errorSt, 
+    setErrorSt
+}: PropsType) => {
     const [values, setValues] = useState<ValuesType>({ min: 0, max: 10 });
 
-    const onInputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    const onMinInputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setErrorSt(false)
+        setValues({ ...values, min: Number(e.currentTarget.value) })
+        if (countSt.minValue < 0 || countSt.minValue >= countSt.maxValue) setErrorSt(true);
+        mode && setMode(!mode)
+    }
+    const onMaxInputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        setErrorSt(false)
         setValues({ ...values, max: Number(e.currentTarget.value) })
+        if (countSt.maxValue <= countSt.minValue) setErrorSt(true);
         mode && setMode(!mode)
     }
     const toSet = () => {
@@ -29,14 +46,14 @@ export const SettingsWindow = ({ callback, countSt, mode, setMode }: PropsType) 
                 <span>max value:</span>
                 <input
                     type="number"
-                    onChange={onInputChangeHandler}
+                    onChange={onMaxInputChangeHandler}
                 />
             </div>
             <div className='startField'>
                 <span>min value:</span>
                 <input
                     type="number"
-                    onChange={onInputChangeHandler}
+                    onChange={onMinInputChangeHandler}
                 />
             </div>
             <div>

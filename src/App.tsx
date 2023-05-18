@@ -13,16 +13,11 @@ export const App = () => {
         { minValue: 0, maxValue: 10, currentValue: 0 }
     );
     const [mode, setMode] = useState<boolean>(true)
-    let error = countSt.currentValue >= countSt.maxValue || countSt.minValue
-        === countSt.maxValue || countSt.maxValue < 0 || countSt.minValue < 0;
+    const [errorSt, setErrorSt] = useState<boolean>(false)
+
     useEffect(() => {
         window.localStorage.setItem('myCounter', countSt.currentValue.toString());
     }, [countSt.currentValue])
-    // useEffect(() => {
-    //     setCountSt(countSettings.start);
-    //     console.log(countSettings);
-
-    // }, [countSt])
 
     return (
         <div className="App">
@@ -31,11 +26,14 @@ export const App = () => {
                 countSt={countSt}
                 mode={mode}
                 setMode={setMode}
+                // errorSt={errorSt}
+                setErrorSt={setErrorSt}
             />
             <CounterWindow
                 countSt={countSt}
                 setCountSt={setCountSt}
                 mode={mode}
+                errorSt={errorSt}
             />
         </div>
     );
