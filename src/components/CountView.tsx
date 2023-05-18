@@ -4,14 +4,14 @@ import s from './CountView.module.css'
 type PropsType = {
     countSt: CountType
     error: boolean
-    mode: boolean
+    countVisibilityMode: boolean
     errorSt: boolean
 }
 
 export const CountView = ({
     countSt,
     error,
-    mode,
+    countVisibilityMode,
     errorSt
 }: PropsType) => {
     const GOOD_MESSAGE = 'enter values and press "set"'
@@ -19,7 +19,7 @@ export const CountView = ({
     return (
         <div className={s.based + ' ' + (error && s.red)}>
             {
-                mode ? countSt.currentValue :
+                countVisibilityMode ? countSt.currentValue :
                     errorSt ? GOOD_MESSAGE : WRONG_MESSAGE
             }
         </div>

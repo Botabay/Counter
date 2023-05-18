@@ -6,13 +6,13 @@ import { CountView } from "./CountView"
 type PropsType = {
     countSt: CountType
     setCountSt: Dispatch<SetStateAction<CountType>>,
-    mode: boolean
+    countVisibilityMode: boolean
     errorSt: boolean
 }
 
 export const CounterWindow = ({ countSt,
     setCountSt,
-    mode,
+    countVisibilityMode,
     errorSt
 }: PropsType) => {
     const toInc = () => {
@@ -26,7 +26,7 @@ export const CounterWindow = ({ countSt,
         === countSt.maxValue || countSt.maxValue < 0 || countSt.minValue < 0;
     return (
         <div className='counterWindow' >
-            <CountView countSt={countSt} error={error} mode={mode} errorSt={errorSt}/>
+            <CountView countSt={countSt} error={error} countVisibilityMode={countVisibilityMode} errorSt={errorSt}/>
             <div>
                 <Button
                     name={'inc'}
