@@ -4,7 +4,7 @@ import { CountType } from './../App'
 import { SettingField } from './SettingField'
 
 type PropsType = {
-    callback: Dispatch<SetStateAction<CountType>>//? need such typisaction
+    callback: Dispatch<SetStateAction<CountType>>//? need such typing
     countSt: CountType
     countVisibilityMode: boolean
     setCountVisibilityMode: Dispatch<SetStateAction<boolean>>
@@ -25,9 +25,8 @@ export const SettingsWindow = ({
     const [values, setValues] = useState<ValuesType>({ min: 1, max: 10 });
     const onMinInputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setDisable(false);
-        if (values.min < 0
-            // || values.min >= values.max
-        ) {
+        const currentValue = Number(e.currentTarget.value);
+        if (currentValue < 0 || currentValue >= values.max) {
             setErrorSt(true);
         } else {
             setValues({ ...values, min: Number(e.currentTarget.value) })
@@ -36,12 +35,13 @@ export const SettingsWindow = ({
         countVisibilityMode && setCountVisibilityMode(!countVisibilityMode)
     }
     const onMaxInputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        const currentValue = Number(e.currentTarget.value);
         setDisable(false);
-        if (values.max <= values.min) {
+        if (currentValue <= values.min) {
             setErrorSt(true);
         } else {
             setErrorSt(false);
-            setValues({ ...values, max: Number(e.currentTarget.value) })
+            setValues({ ...values, max: currentValue })
         }
         countVisibilityMode && setCountVisibilityMode(!countVisibilityMode)
     }
