@@ -5,7 +5,7 @@ import { SettingField } from './SettingField'
 import s from './SettingsWindow.module.css'
 
 type PropsType = {
-    callback: Dispatch<SetStateAction<CountType>>//? need such typing
+    setCountSt: Dispatch<SetStateAction<CountType>>//? need such typing
     errorSt: boolean
     countVisibilityMode: boolean
     setCountVisibilityMode: Dispatch<SetStateAction<boolean>>
@@ -16,14 +16,20 @@ type ValuesType = {
     max: number
 }
 export const SettingsWindow = ({
-    callback,
+    setCountSt,
     errorSt,
     countVisibilityMode,
     setCountVisibilityMode,
     setErrorSt
 }: PropsType) => {
     const [disable, setDisable] = useState<boolean>(false);
-    const [values, setValues] = useState<ValuesType>({ min: 1, max: 10 });
+    const localStorageSettings = JSON.parse(window.localStorage.getItem('counterSettings')
+        || JSON.stringify({ min: 1, max: 15 }));
+        
+    const [values, setValues] = useState<ValuesType>({
+        min: localStorageSettings.min,
+        max: localStorageSettings.max
+    });
     const onMinInputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setDisable(false);
         const currentValue = Number(e.currentTarget.value);
@@ -67,9 +73,10 @@ export const SettingsWindow = ({
         countVisibilityMode && setCountVisibilityMode(!countVisibilityMode)
     }
     const toSet = () => {
-        callback({ minValue: values.min, maxValue: values.max, currentValue: values.min })
+        setCountSt({ minValue: values.min, maxValue: values.max, currentValue: values.min })
         setCountVisibilityMode(true)
         setDisable(true);
+        window.localStorage.setItem('counterSettings', JSON.stringify(values));
     }
     return (
         <div className={s.settingsWindow}>

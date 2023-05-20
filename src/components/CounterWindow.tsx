@@ -34,12 +34,16 @@ export const CounterWindow = ({ countSt,
                 <Button
                     name={'inc'}
                     onClick={toInc}
-                    disabled={countSt.currentValue === countSt.maxValue}
+                    disabled={countSt.currentValue === countSt.maxValue 
+                        // || !countVisibilityMode
+                    }
                 />
                 <Button
                     name={'reset'}
                     onClick={toReset}
-                    disabled={countSt.currentValue === countSt.minValue}
+                    disabled={countSt.currentValue === countSt.minValue
+                        //  || !countVisibilityMode
+                        }
                 />
             </div>
         </div >

@@ -15,18 +15,21 @@ export const App = () => {
     const [countVisibilityMode, setCountVisibilityMode] = useState<boolean>(true)//show number or message
     const [errorSt, setErrorSt] = useState<boolean>(false)//show messages when we are editing to settings
 
-    useEffect(() => {
-        window.localStorage.setItem('myCounter', countSt.currentValue.toString());
-    }, [countSt.currentValue])
+    // useEffect(() => {
+    //     window.localStorage.setItem('myCounter', JSON.stringify(countSt));
+    // }, [countSt.currentValue])
 
+    
     return (
         <div className="App">
             <SettingsWindow
-                callback={setCountSt}
+                setCountSt={setCountSt}
+
                 countVisibilityMode={countVisibilityMode}
                 setCountVisibilityMode={setCountVisibilityMode}
-                setErrorSt={setErrorSt}
+                
                 errorSt={errorSt}
+                setErrorSt={setErrorSt}
             />
             <CounterWindow
                 countSt={countSt}
