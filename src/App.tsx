@@ -10,7 +10,7 @@ export type CountType = {
 }
 export const App = () => {
     const [countSt, setCountSt] = useState<CountType>(
-        { minValue: 0, maxValue: 10, currentValue: 0 }
+        { minValue: 0, maxValue: 10, currentValue: 1 }
     );
     const [countVisibilityMode, setCountVisibilityMode] = useState<boolean>(true)//show number or message
     const [errorSt, setErrorSt] = useState<boolean>(false)//show messages when we are editing to settings

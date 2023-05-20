@@ -26,12 +26,23 @@ export const SettingsWindow = ({
     const onMinInputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setDisable(false);
         const currentValue = Number(e.currentTarget.value);
-        if (currentValue < 0 || currentValue >= values.max) {
+
+        if (currentValue < 0) {
             setErrorSt(true);
-        } else {
-            setValues({ ...values, min: Number(e.currentTarget.value) })
-            setErrorSt(false);
+            setValues({ ...values, min: -1 })
+            setDisable(true);
+            return;
         }
+        if (currentValue >= values.max) {
+            setErrorSt(true);
+            setValues({ ...values, min: values.max })
+            setDisable(true);
+            return;
+        }
+        setValues({ ...values, min: currentValue })
+        setErrorSt(false);
+        setDisable(false);
+
         countVisibilityMode && setCountVisibilityMode(!countVisibilityMode)
     }
     const onMaxInputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
@@ -39,17 +50,22 @@ export const SettingsWindow = ({
         setDisable(false);
         if (currentValue <= values.min) {
             setErrorSt(true);
-        } else {
-            setErrorSt(false);
-            setValues({ ...values, max: currentValue })
+            setValues({ ...values, max: values.min })
+            setDisable(true);
+            return;
         }
+        setErrorSt(false);
+        setDisable(false);
+        setValues({ ...values, max: currentValue })
+
         countVisibilityMode && setCountVisibilityMode(!countVisibilityMode)
     }
     const toSet = () => {
-        callback({ ...countSt, minValue: values.min, maxValue: values.max })
-        setCountVisibilityMode(!countVisibilityMode)
+        callback({minValue: values.min, maxValue: values.max, currentValue:values.min })
+        setCountVisibilityMode(true)
         setDisable(true);
     }
+    console.log('render');
     return (
         <div className='settingsWindow'>
             <SettingField

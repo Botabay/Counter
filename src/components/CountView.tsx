@@ -17,10 +17,21 @@ export const CountView = ({
     let countLocalError = countSt.currentValue === countSt.minValue ||
         countSt.currentValue === countSt.maxValue
     return (
-        <div className={s.based + ' ' + (countLocalError && s.red)}>
+        <div className={''}>
             {
-                countVisibilityMode ? countSt.currentValue :
-                    errorSt ? WRONG_MESSAGE : GOOD_MESSAGE
+                countVisibilityMode ?
+                    <div className={s.based + ' ' + (countLocalError && s.red)}>
+                        {countSt.currentValue}
+                    </div> :
+                    errorSt ?
+                        <div className={s.based + ' ' + s.red}>
+                            {WRONG_MESSAGE}
+                        </div> :
+                        <div className={s.based}>
+                            {GOOD_MESSAGE}
+                        </div>
+
+
             }
         </div>
     )
