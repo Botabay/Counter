@@ -23,10 +23,10 @@ export const App = () => {
         <div className="App">
             <SettingsWindow
                 callback={setCountSt}
-                countSt={countSt}
                 countVisibilityMode={countVisibilityMode}
                 setCountVisibilityMode={setCountVisibilityMode}
                 setErrorSt={setErrorSt}
+                errorSt={errorSt}
             />
             <CounterWindow
                 countSt={countSt}

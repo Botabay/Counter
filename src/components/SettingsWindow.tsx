@@ -6,7 +6,7 @@ import s from './SettingsWindow.module.css'
 
 type PropsType = {
     callback: Dispatch<SetStateAction<CountType>>//? need such typing
-    countSt: CountType
+    errorSt: boolean
     countVisibilityMode: boolean
     setCountVisibilityMode: Dispatch<SetStateAction<boolean>>
     setErrorSt: Dispatch<SetStateAction<boolean>>
@@ -17,7 +17,7 @@ type ValuesType = {
 }
 export const SettingsWindow = ({
     callback,
-    countSt,
+    errorSt,
     countVisibilityMode,
     setCountVisibilityMode,
     setErrorSt
@@ -32,17 +32,20 @@ export const SettingsWindow = ({
             setErrorSt(true);
             setValues({ ...values, min: -1 })
             setDisable(true);
+            e.currentTarget.classList.add(s.error);
             return;
         }
         if (currentValue >= values.max) {
             setErrorSt(true);
             setValues({ ...values, min: values.max })
             setDisable(true);
+            e.currentTarget.classList.add(s.error);
             return;
         }
         setValues({ ...values, min: currentValue })
         setErrorSt(false);
         setDisable(false);
+        e.currentTarget.classList.remove(s.error);
 
         countVisibilityMode && setCountVisibilityMode(!countVisibilityMode)
     }
@@ -53,20 +56,21 @@ export const SettingsWindow = ({
             setErrorSt(true);
             setValues({ ...values, max: values.min })
             setDisable(true);
+            e.currentTarget.classList.add(s.error);
             return;
         }
         setErrorSt(false);
         setDisable(false);
         setValues({ ...values, max: currentValue })
+        e.currentTarget.classList.remove(s.error);
 
         countVisibilityMode && setCountVisibilityMode(!countVisibilityMode)
     }
     const toSet = () => {
-        callback({minValue: values.min, maxValue: values.max, currentValue:values.min })
+        callback({ minValue: values.min, maxValue: values.max, currentValue: values.min })
         setCountVisibilityMode(true)
         setDisable(true);
     }
-    console.log('render');
     return (
         <div className={s.settingsWindow}>
             <SettingField

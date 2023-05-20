@@ -1,10 +1,11 @@
 import { Input } from './Input'
-import { ChangeEvent, Dispatch, SetStateAction } from 'react'
+import { ChangeEvent } from 'react'
+import s from './SettingField.module.css'
 
 type PropsType = {
     text: string
     onInputChangeHandler: (e: ChangeEvent<HTMLInputElement>) => void
-    value: number
+    value:number
 }
 export const SettingField = ({
     text,
@@ -12,11 +13,11 @@ export const SettingField = ({
     value
 }: PropsType) => {
     return (
-        <div className='Field'>
+        <div className={s.field}>
             <span>{text}</span>
             <Input
                 onChange={onInputChangeHandler}
-                value={value}
+                value={value}            
             />
         </div>
     )
