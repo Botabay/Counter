@@ -2,6 +2,7 @@ import { useState, Dispatch, SetStateAction, ChangeEvent } from 'react'
 import { Button } from './Button'
 import { CountType } from './../App'
 import { SettingField } from './SettingField'
+import s from './SettingsWindow.module.css'
 
 type PropsType = {
     callback: Dispatch<SetStateAction<CountType>>//? need such typing
@@ -67,7 +68,7 @@ export const SettingsWindow = ({
     }
     console.log('render');
     return (
-        <div className='settingsWindow'>
+        <div className={s.settingsWindow}>
             <SettingField
                 text={'max value:'}
                 onInputChangeHandler={onMaxInputChangeHandler}

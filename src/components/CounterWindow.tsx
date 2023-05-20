@@ -2,6 +2,7 @@ import { CountType } from "../App"
 import { Button } from "./Button"
 import { Dispatch, SetStateAction } from 'react'
 import { CountView } from "./CountView"
+import s from './CounterWindow.module.css'
 
 type PropsType = {
     countSt: CountType
@@ -23,7 +24,7 @@ export const CounterWindow = ({ countSt,
         setCountSt({ ...countSt, currentValue: countSt.minValue });
     }
     return (
-        <div className='counterWindow' >
+        <div className={s.counterWindow} >
             <CountView
                 countSt={countSt}
                 countVisibilityMode={countVisibilityMode}

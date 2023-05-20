@@ -1,13 +1,6 @@
 .App {
-  padding: 30px;
-  /* display: flex; */
-  width: 200px;
-  background-color: grey;
-  margin: 100px auto;
-  border-radius: 5px;
-  text-align: center;
-}
-
-.App > div {
-  margin-right: 50px;
+  display: flex;
+  min-width: 300px;
+  max-width: 600px;
+  margin: 0 auto;
 }
