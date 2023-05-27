@@ -1,7 +1,7 @@
 import './App.css';
 import { useEffect, useState } from 'react'
-import { SettingsWindow } from './components/SettingsWindow'
-import { CounterWindow } from './components/CounterWindow';
+import { SettingsWindow } from './components/SettingsWindow/SettingsWindow'
+import { CounterWindow } from './components/CounterWindow/CounterWindow';
 
 export type CountType = {
     minValue: number

@@ -1,7 +1,7 @@
-import { CountType } from "../App"
-import { Button } from "./Button"
+import { CountType } from "../../App"
+import { Button } from "./../Button/Button"
 import { Dispatch, SetStateAction } from 'react'
-import { CountView } from "./CountView"
+import { CountView } from "./../CountView/CountView"
 import s from './CounterWindow.module.css'
 
 type PropsType = {
@@ -34,7 +34,7 @@ export const CounterWindow = ({ countSt,
                 <Button
                     name={'inc'}
                     onClick={toInc}
-                    disabled={countSt.currentValue === countSt.maxValue 
+                    disabled={countSt.currentValue === countSt.maxValue
                         // || !countVisibilityMode
                     }
                 />
@@ -43,7 +43,7 @@ export const CounterWindow = ({ countSt,
                     onClick={toReset}
                     disabled={countSt.currentValue === countSt.minValue
                         //  || !countVisibilityMode
-                        }
+                    }
                 />
             </div>
         </div >

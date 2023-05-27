@@ -1,7 +1,7 @@
 import { useState, Dispatch, SetStateAction, ChangeEvent } from 'react'
-import { Button } from './Button'
-import { CountType } from './../App'
-import { SettingField } from './SettingField'
+import { Button } from './../Button/Button'
+import { CountType } from './../../App'
+import { SettingField } from './../SettingField/SettingField'
 import s from './SettingsWindow.module.css'
 
 type PropsType = {
@@ -25,7 +25,7 @@ export const SettingsWindow = ({
     const [disable, setDisable] = useState<boolean>(false);
     const localStorageSettings = JSON.parse(window.localStorage.getItem('counterSettings')
         || JSON.stringify({ min: 1, max: 15 }));
-        
+
     const [values, setValues] = useState<ValuesType>({
         min: localStorageSettings.min,
         max: localStorageSettings.max

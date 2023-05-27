@@ -1,4 +1,4 @@
-import { CountType } from '../App'
+import { CountType } from '../../App'
 import s from './CountView.module.css'
 
 type PropsType = {
