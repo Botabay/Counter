@@ -1,49 +1,45 @@
 import { CountType } from "../../App"
 import { Button } from "./../Button/Button"
-import { Dispatch, SetStateAction } from 'react'
-import { CountView } from "./../CountView/CountView"
+import { useState } from 'react'
+import { CounterDisplay } from "../CounterDisplay/CounterDisplay"
 import s from './CounterWindow.module.css'
 
 type PropsType = {
-    countSt: CountType
-    setCountSt: Dispatch<SetStateAction<CountType>>,
-    countVisibilityMode: boolean
+    settings: CountType
+    numberOrTextMode: boolean
     errorSt: boolean
+    countBtnsDisable: boolean
 }
 
-export const CounterWindow = ({ countSt,
-    setCountSt,
-    countVisibilityMode,
-    errorSt
+export const CounterWindow = ({
+    settings,
+    numberOrTextMode,
+    errorSt,
+    countBtnsDisable
 }: PropsType) => {
+    const [countSt, setCountSt] = useState(settings.minValue);
     const toInc = () => {
-        if (countSt.currentValue <= countSt.maxValue)
-            setCountSt({ ...countSt, currentValue: ++countSt.currentValue })
+        if (countSt <= settings.maxValue) setCountSt(countSt+1)
     }
-    const toReset = () => {
-        setCountSt({ ...countSt, currentValue: countSt.minValue });
-    }
+    const toReset = () => setCountSt(0)
     return (
         <div className={s.counterWindow} >
-            <CountView
-                countSt={countSt}
-                countVisibilityMode={countVisibilityMode}
+            <CounterDisplay
+                settings={settings}
+                currentValue={countSt}
+                numberOrTextMode={numberOrTextMode}
                 errorSt={errorSt}
             />
             <div>
                 <Button
                     name={'inc'}
                     onClick={toInc}
-                    disabled={countSt.currentValue === countSt.maxValue
-                        // || !countVisibilityMode
-                    }
+                    disabled={countSt === settings.maxValue || countBtnsDisable}
                 />
                 <Button
                     name={'reset'}
                     onClick={toReset}
-                    disabled={countSt.currentValue === countSt.minValue
-                        //  || !countVisibilityMode
-                    }
+                    disabled={countSt === settings.minValue || countBtnsDisable}
                 />
             </div>
         </div >

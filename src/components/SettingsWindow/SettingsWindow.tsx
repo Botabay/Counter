@@ -5,87 +5,80 @@ import { SettingField } from './../SettingField/SettingField'
 import s from './SettingsWindow.module.css'
 
 type PropsType = {
-    setCountSt: Dispatch<SetStateAction<CountType>>//? need such typing
+    settings:CountType
+    callbackMin:(v:number)=>void
+    callbackMax:(v:number)=>void
     errorSt: boolean
-    countVisibilityMode: boolean
-    setCountVisibilityMode: Dispatch<SetStateAction<boolean>>
+    setNumberOrTextMode: Dispatch<SetStateAction<boolean>>
     setErrorSt: Dispatch<SetStateAction<boolean>>
-}
-type ValuesType = {
-    min: number
-    max: number
+    setCountBtnsDisable: Dispatch<SetStateAction<boolean>>
 }
 export const SettingsWindow = ({
-    setCountSt,
+    settings,
+    callbackMin,
+    callbackMax,
     errorSt,
-    countVisibilityMode,
-    setCountVisibilityMode,
-    setErrorSt
+    setNumberOrTextMode,
+    setErrorSt,
+    setCountBtnsDisable
 }: PropsType) => {
-    const [disable, setDisable] = useState<boolean>(false);
-    const localStorageSettings = JSON.parse(window.localStorage.getItem('counterSettings')
-        || JSON.stringify({ min: 1, max: 15 }));
-
-    const [values, setValues] = useState<ValuesType>({
-        min: localStorageSettings.min,
-        max: localStorageSettings.max
-    });
+    const [disable, setDisable] = useState<boolean>(false);//disability of button(set)
     const onMinInputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        setDisable(false);
         const currentValue = Number(e.currentTarget.value);
-
+        e.currentTarget.classList.remove(s.error)//??????
         if (currentValue < 0) {
             setErrorSt(true);
-            setValues({ ...values, min: -1 })
             setDisable(true);
-            e.currentTarget.classList.add(s.error);
-            return;
-        }
-        if (currentValue >= values.max) {
-            setErrorSt(true);
-            setValues({ ...values, min: values.max })
-            setDisable(true);
-            e.currentTarget.classList.add(s.error);
-            return;
-        }
-        setValues({ ...values, min: currentValue })
-        setErrorSt(false);
-        setDisable(false);
-        e.currentTarget.classList.remove(s.error);
+            e.currentTarget.classList.add(s.error)//??????
 
-        countVisibilityMode && setCountVisibilityMode(!countVisibilityMode)
+            return;
+        }
+        if (currentValue >= settings.maxValue) {
+            setErrorSt(true);
+            
+            setDisable(true);
+            return;
+        }
+        // callbackMin(currentValue)
+        setErrorSt(false);
+        if (!errorSt) setDisable(false);
+
+        setNumberOrTextMode(false)
+        setCountBtnsDisable(true);
     }
     const onMaxInputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        const currentValue = Number(e.currentTarget.value);
-        setDisable(false);
-        if (currentValue <= values.min) {
-            setErrorSt(true);
-            setValues({ ...values, max: values.min })
-            setDisable(true);
-            e.currentTarget.classList.add(s.error);
-            return;
-        }
-        setErrorSt(false);
-        setDisable(false);
-        setValues({ ...values, max: currentValue })
-        e.currentTarget.classList.remove(s.error);
+    //     const currentValue = Number(e.currentTarget.value);
+    //     // setDisable(false);
+    //     if (currentValue <= values.min) {
+    //         setErrorSt(true);
+    //         setDisable(true);
+    //         return;
+    //     }
+    //     if (!errorSt) setDisable(false);
+    //     setErrorSt(false);
 
-        countVisibilityMode && setCountVisibilityMode(!countVisibilityMode)
+    //     // callbackMax(currentValue )
+
+    //     setNumberOrTextMode(false)
+    //     setCountBtnsDisable(true)
     }
     const toSet = () => {
-        setCountSt({ minValue: values.min, maxValue: values.max, currentValue: values.min })
-        setCountVisibilityMode(true)
+        callbackMax('dd')//// fix
+        setNumberOrTextMode(true)
         setDisable(true);
-        window.localStorage.setItem('counterSettings', JSON.stringify(values));
+        setCountBtnsDisable(false);
+        // window.localStorage.setItem('counterSettings', JSON.stringify(values));
     }
     return (
         <div className={s.settingsWindow}>
             <SettingField
+                // id={'max'}
                 text={'max value:'}
                 onInputChangeHandler={onMaxInputChangeHandler}
                 value={values.max}
             />
             <SettingField
+                // id={'min'}
                 text={'min value:'}
                 onInputChangeHandler={onMinInputChangeHandler}
                 value={values.min}
