@@ -26,13 +26,12 @@ export const App = () => {
     return (
         <div className="App">
             <SettingsWindow
+                errorSt={errorSt}
                 settings={settings}
                 setSettingsCallback={setSettingsCallback}
-                setCountBtnsDisable={setCountBtnsDisable}
-                setNumberOrTextMode={setNumberOrTextMode}
-
-                errorSt={errorSt}
-                setErrorSt={setErrorSt}
+                setCountBtnsDisable={(v)=>setCountBtnsDisable(v)}
+                setNumberOrTextMode={(v)=>setNumberOrTextMode(v)}
+                setErrorSt={(v)=>setErrorSt(v)}
             />
             <CounterWindow 
                 settings={settings}

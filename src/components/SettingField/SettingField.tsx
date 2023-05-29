@@ -1,25 +1,24 @@
 import { Input } from './../Input/Input'
 import { ChangeEvent, useState } from 'react'
 import s from './SettingField.module.css'
-import { CountType } from '../../App'
 
 type PropsType = {
     text: string
     onInputChangeHandler: (e: ChangeEvent<HTMLInputElement>) => void
     value: number
-    localErrorS?:boolean
+    localErrorS?: boolean
 }
 export const SettingField = ({
     text,
     onInputChangeHandler,
     value,
-    localErrorS
+    localErrorS,
 }: PropsType) => {
     return (
         <div
             className={s.field
-                 + ' ' + (localErrorS ? s.error : '')
-                }
+                + ' ' + (localErrorS ? s.error : '')
+            }
         > {/*bad adding errorClass*/}
             <span>{text}</span>
             <Input

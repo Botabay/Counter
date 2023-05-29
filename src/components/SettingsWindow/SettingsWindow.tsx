@@ -1,4 +1,4 @@
-import { useState, Dispatch, SetStateAction, ChangeEvent } from 'react'
+import { useState, ChangeEvent } from 'react'
 import { Button } from './../Button/Button'
 import { CountType } from './../../App'
 import { SettingField } from './../SettingField/SettingField'
@@ -7,54 +7,48 @@ import s from './SettingsWindow.module.css'
 type PropsType = {
     settings: CountType
     setSettingsCallback: (max: number, min: number) => void
+    setNumberOrTextMode: (v: boolean) => void
     errorSt: boolean
-    setNumberOrTextMode: Dispatch<SetStateAction<boolean>>
-    setErrorSt: Dispatch<SetStateAction<boolean>>
-    setCountBtnsDisable: Dispatch<SetStateAction<boolean>>
+    setErrorSt: (v: boolean) => void
+    setCountBtnsDisable: (v: boolean) => void
 }
 export const SettingsWindow = ({
     settings,
     setSettingsCallback,
-    errorSt,
     setNumberOrTextMode,
+    errorSt,
     setErrorSt,
     setCountBtnsDisable
 }: PropsType) => {
-    const [disable, setDisable] = useState<boolean>(false);//disability of button(set)
     const [minValue, setMinValue] = useState(settings.minValue)
     const [maxValue, setMaxValue] = useState(settings.maxValue)
 
     const onMaxInputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        const value = Number(e.currentTarget.value);
-        if (value < minValue) {
-            setMaxValue(minValue);
-        } else setMaxValue(value);
+        let value = Number(e.currentTarget.value);
+        if (value < minValue) return;
 
-        setDisable(value === minValue || minValue === maxValue || minValue === -1);
-        setErrorSt(value === minValue || minValue === maxValue || minValue === -1);
+        setMaxValue(value);
+        setErrorSt(value === minValue || minValue < 0);
 
         setNumberOrTextMode(false)
         setCountBtnsDisable(true)
     }
+
     const onMinInputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        const value = Number(e.currentTarget.value);
+        let value = Number(e.currentTarget.value);
+        if (value > maxValue) return;
+        if (value < 0) value = -1;
 
-        if (value < 0) {
-            setMinValue(-1);
-        } else setMinValue(value)
-
-        if (value > maxValue) setMinValue(maxValue); else setMinValue(value);
-
-        setDisable(value === -1 || value === maxValue || minValue === maxValue);
-        setErrorSt(value === -1 || value === maxValue || minValue === maxValue);
+        setMinValue(value)
+        setErrorSt(value < 0 || value === maxValue || maxValue === 0);
 
         setNumberOrTextMode(false)
         setCountBtnsDisable(true)
     }
+
     const toSet = () => {
         setSettingsCallback(maxValue, minValue)
         setNumberOrTextMode(true)
-        setDisable(true);
         setCountBtnsDisable(false);
         // window.localStorage.setItem('counterSettings', JSON.stringify(values));
     }
@@ -74,7 +68,7 @@ export const SettingsWindow = ({
                 localErrorS={minlocalErrorS}
             />
             <div>
-                <Button name={'set'} onClick={toSet} disabled={disable} />
+                <Button name={'set'} onClick={toSet} disabled={errorSt} />
             </div>
         </div>
     )

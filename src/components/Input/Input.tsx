@@ -7,7 +7,7 @@ type PropsType = {
 }
 export const Input = ({
     onChange,
-    value
+    value,
 }: PropsType) => {
     return (
         <input
