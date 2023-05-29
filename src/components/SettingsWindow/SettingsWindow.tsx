@@ -5,9 +5,8 @@ import { SettingField } from './../SettingField/SettingField'
 import s from './SettingsWindow.module.css'
 
 type PropsType = {
-    settings:CountType
-    callbackMin:(v:number)=>void
-    callbackMax:(v:number)=>void
+    settings: CountType
+    setSettingsCallback: (max: number, min: number) => void
     errorSt: boolean
     setNumberOrTextMode: Dispatch<SetStateAction<boolean>>
     setErrorSt: Dispatch<SetStateAction<boolean>>
@@ -15,73 +14,64 @@ type PropsType = {
 }
 export const SettingsWindow = ({
     settings,
-    callbackMin,
-    callbackMax,
+    setSettingsCallback,
     errorSt,
     setNumberOrTextMode,
     setErrorSt,
     setCountBtnsDisable
 }: PropsType) => {
     const [disable, setDisable] = useState<boolean>(false);//disability of button(set)
-    const onMinInputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        const currentValue = Number(e.currentTarget.value);
-        e.currentTarget.classList.remove(s.error)//??????
-        if (currentValue < 0) {
-            setErrorSt(true);
-            setDisable(true);
-            e.currentTarget.classList.add(s.error)//??????
+    const [minValue, setMinValue] = useState(settings.minValue)
+    const [maxValue, setMaxValue] = useState(settings.maxValue)
 
-            return;
-        }
-        if (currentValue >= settings.maxValue) {
-            setErrorSt(true);
-            
-            setDisable(true);
-            return;
-        }
-        // callbackMin(currentValue)
-        setErrorSt(false);
-        if (!errorSt) setDisable(false);
+    const onMaxInputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        const value = Number(e.currentTarget.value);
+        if (value < minValue) {
+            setMaxValue(minValue);
+        } else setMaxValue(value);
+
+        setDisable(value === minValue || minValue === maxValue || minValue === -1);
+        setErrorSt(value === minValue || minValue === maxValue || minValue === -1);
 
         setNumberOrTextMode(false)
-        setCountBtnsDisable(true);
+        setCountBtnsDisable(true)
     }
-    const onMaxInputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    //     const currentValue = Number(e.currentTarget.value);
-    //     // setDisable(false);
-    //     if (currentValue <= values.min) {
-    //         setErrorSt(true);
-    //         setDisable(true);
-    //         return;
-    //     }
-    //     if (!errorSt) setDisable(false);
-    //     setErrorSt(false);
+    const onMinInputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        const value = Number(e.currentTarget.value);
 
-    //     // callbackMax(currentValue )
+        if (value < 0) {
+            setMinValue(-1);
+        } else setMinValue(value)
 
-    //     setNumberOrTextMode(false)
-    //     setCountBtnsDisable(true)
+        if (value > maxValue) setMinValue(maxValue); else setMinValue(value);
+
+        setDisable(value === -1 || value === maxValue || minValue === maxValue);
+        setErrorSt(value === -1 || value === maxValue || minValue === maxValue);
+
+        setNumberOrTextMode(false)
+        setCountBtnsDisable(true)
     }
     const toSet = () => {
-        callbackMax('dd')//// fix
+        setSettingsCallback(maxValue, minValue)
         setNumberOrTextMode(true)
         setDisable(true);
         setCountBtnsDisable(false);
         // window.localStorage.setItem('counterSettings', JSON.stringify(values));
     }
+    let minlocalErrorS = (minValue < 0) ? true : false;//bad adding errorClass
+
     return (
         <div className={s.settingsWindow}>
             <SettingField
-                // id={'max'}
                 text={'max value:'}
                 onInputChangeHandler={onMaxInputChangeHandler}
-                value={values.max}
+                value={maxValue}
             />
             <SettingField
-                // id={'min'}
                 text={'min value:'}
                 onInputChangeHandler={onMinInputChangeHandler}
-                value={values.min}
+                value={minValue}
+                localErrorS={minlocalErrorS}
             />
             <div>
                 <Button name={'set'} onClick={toSet} disabled={disable} />

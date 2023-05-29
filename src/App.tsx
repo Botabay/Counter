@@ -20,18 +20,14 @@ export const App = () => {
     // useEffect(() => {
     //     window.localStorage.setItem('myCounter', JSON.stringify(countSt));
     // }, [countSt.currentValue])
-    const callbackMax = (v: number) => {
-        setSettings({ ...settings, maxValue: v })
-    }
-    const callbackMin = (v: number) => {
-        setSettings({ ...settings, minValue: v })
+    const setSettingsCallback = (max:number,min: number) => {
+        setSettings({ ...settings, maxValue: max, minValue:min })
     }
     return (
         <div className="App">
             <SettingsWindow
                 settings={settings}
-                callbackMax={callbackMax}
-                callbackMin={callbackMin}
+                setSettingsCallback={setSettingsCallback}
                 setCountBtnsDisable={setCountBtnsDisable}
                 setNumberOrTextMode={setNumberOrTextMode}
 
