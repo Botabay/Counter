@@ -15,7 +15,9 @@ export const App = (): JSX.Element => {
         maxValue: localStorageSettings.maxValue
     });
     //show number or message
-    const [numberOrTextMode, setNumberOrTextMode] = useState<boolean>(true)
+    // const [numberOrTextMode, setNumberOrTextMode] = useState<boolean>(true)
+    const [showSettings, setShowSettings] = useState<boolean>(false);
+    const showSettingsCallback = () => setShowSettings(!showSettings)
     //show messages when we are editing to settings
     const [errorSt, setErrorSt] = useState<boolean>(false)
     //disability of buttons(inc+reset)
@@ -24,19 +26,22 @@ export const App = (): JSX.Element => {
         setSettings({ ...settings, maxValue: max, minValue: min })
     return (
         <div className="App">
-            <SettingsWindow
-                settings={settings}
-                setSettingsCallback={setSettingsCallback}
-                setCountBtnsDisable={(v) => setCountBtnsDisable(v)}
-                setNumberOrTextMode={(v) => setNumberOrTextMode(v)}
-                setErrorSt={(v) => setErrorSt(v)}
-            />
-            <CounterWindow
-                settings={settings}
-                numberOrTextMode={numberOrTextMode}
-                errorSt={errorSt}
-                countBtnsDisable={countBtnsDisable}
-            />
+            {showSettings ?
+                <SettingsWindow
+                    settings={settings}
+                    setSettingsCallback={setSettingsCallback}
+                    setCountBtnsDisable={(v) => setCountBtnsDisable(v)}
+                    // setNumberOrTextMode={(v) => setNumberOrTextMode(v)}
+                    setErrorSt={(v) => setErrorSt(v)}
+                    showSettingsCallback={showSettingsCallback}
+                /> :
+                <CounterWindow
+                    settings={settings}
+                    // numberOrTextMode={numberOrTextMode}
+                    errorSt={errorSt}
+                    countBtnsDisable={countBtnsDisable}
+                    showSettingsCallback={showSettingsCallback}
+                />}
         </div>
     );
 }

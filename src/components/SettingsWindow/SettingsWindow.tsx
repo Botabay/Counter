@@ -7,16 +7,18 @@ import s from './SettingsWindow.module.css'
 type PropsType = {
     settings: CountType
     setSettingsCallback: (max: number, min: number) => void
-    setNumberOrTextMode: (v: boolean) => void
+    // setNumberOrTextMode: (v: boolean) => void
     setErrorSt: (v: boolean) => void
     setCountBtnsDisable: (v: boolean) => void
+    showSettingsCallback: () => void
 }
 export const SettingsWindow = ({
     settings,
     setSettingsCallback,
-    setNumberOrTextMode,
+    // setNumberOrTextMode,
     setErrorSt,
-    setCountBtnsDisable
+    setCountBtnsDisable,
+    showSettingsCallback
 }: PropsType): JSX.Element => {
     const [isDisabled, setIsDisabled] = useState<boolean>(true)
     const [minValue, setMinValue] = useState<number>(settings.minValue)
@@ -30,7 +32,7 @@ export const SettingsWindow = ({
         setErrorSt(value === minValue || minValue < 0);
         setIsDisabled(value === minValue || minValue < 0)
 
-        setNumberOrTextMode(false)
+        // setNumberOrTextMode(false)
         setCountBtnsDisable(true)
     }
 
@@ -43,13 +45,14 @@ export const SettingsWindow = ({
         setErrorSt(value < 0 || value === maxValue || maxValue === 0);
         setIsDisabled(value < 0 || value === maxValue || maxValue === 0);
 
-        setNumberOrTextMode(false)
+        // setNumberOrTextMode(false)
         setCountBtnsDisable(true)
     }
 
     const toSet = (): void => {
         setSettingsCallback(maxValue, minValue)
-        setNumberOrTextMode(true)
+        // setNumberOrTextMode(true)
+        showSettingsCallback()
         setCountBtnsDisable(false);
         setIsDisabled(true)
         window.localStorage.setItem('counterSettings', JSON.stringify({ minValue, maxValue }));

@@ -4,14 +4,14 @@ import s from './CounterDisplay.module.css'
 type PropsType = {
     settings: CountType
     currentValue: number
-    numberOrTextMode: boolean
+    // numberOrTextMode: boolean
     errorSt: boolean
 }
 
 export const CounterDisplay = ({
     settings,
     currentValue,
-    numberOrTextMode,
+    // numberOrTextMode,
     errorSt
 }: PropsType): JSX.Element => {
     const GOOD_MESSAGE = 'enter values and press "set"'
@@ -21,7 +21,8 @@ export const CounterDisplay = ({
     return (
         <>
             {
-                numberOrTextMode ?
+                // numberOrTextMode ?
+                true?
                     <div className={s.based + ' ' + (isSupremed && s.red)}>
                         {currentValue}
                     </div> :
