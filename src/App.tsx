@@ -15,9 +15,7 @@ export const App = (): JSX.Element => {
         maxValue: localStorageSettings.maxValue
     });
     const [showSettings, setShowSettings] = useState<boolean>(false);
-    const showSettingsCallback = () => setShowSettings(!showSettings)
-    //show messages when we are editing to settings
-    const [errorSt, setErrorSt] = useState<boolean>(false)
+    const showSettingsCallback = ():void => setShowSettings(!showSettings)
     const setSettingsCallback = (max: number, min: number): void =>
         setSettings({ ...settings, maxValue: max, minValue: min })
     return (
@@ -26,12 +24,10 @@ export const App = (): JSX.Element => {
                 <SettingsWindow
                     settings={settings}
                     setSettingsCallback={setSettingsCallback}
-                    setErrorSt={(v) => setErrorSt(v)}
                     showSettingsCallback={showSettingsCallback}
                 /> :
                 <CounterWindow
                     settings={settings}
-                    errorSt={errorSt}
                     showSettingsCallback={showSettingsCallback}
                 />}
         </div>

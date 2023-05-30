@@ -7,16 +7,14 @@ import s from './SettingsWindow.module.css'
 type PropsType = {
     settings: CountType
     setSettingsCallback: (max: number, min: number) => void
-    setErrorSt: (v: boolean) => void
     showSettingsCallback: () => void
 }
 export const SettingsWindow = ({
     settings,
     setSettingsCallback,
-    setErrorSt,
     showSettingsCallback
 }: PropsType): JSX.Element => {
-    const [isDisabled, setIsDisabled] = useState<boolean>(true)
+    const [isDisabled, setIsDisabled] = useState<boolean>(false)
     const [minValue, setMinValue] = useState<number>(settings.minValue)
     const [maxValue, setMaxValue] = useState<number>(settings.maxValue)
 
@@ -25,7 +23,6 @@ export const SettingsWindow = ({
         if (value < minValue) return;
 
         setMaxValue(value);
-        setErrorSt(value === minValue || minValue < 0);
         setIsDisabled(value === minValue || minValue < 0)
     }
 
@@ -35,14 +32,12 @@ export const SettingsWindow = ({
         if (value < 0) value = -1;
 
         setMinValue(value)
-        setErrorSt(value < 0 || value === maxValue || maxValue === 0);
         setIsDisabled(value < 0 || value === maxValue || maxValue === 0);
     }
 
     const toSet = (): void => {
         setSettingsCallback(maxValue, minValue)
         showSettingsCallback()
-        setIsDisabled(true)
         window.localStorage.setItem('counterSettings', JSON.stringify({ minValue, maxValue }));
     }
 
