@@ -16,13 +16,13 @@ export const CounterWindow = ({
     numberOrTextMode,
     errorSt,
     countBtnsDisable
-}: PropsType) => {
-    const [countSt, setCountSt] = useState(settings.minValue);
-    useEffect(()=>{setCountSt(settings.minValue)},[settings])
-    const toInc = () => {
-        if (countSt <= settings.maxValue) setCountSt(countSt+1)
+}: PropsType): JSX.Element => {
+    const [countSt, setCountSt] = useState<number>(settings.minValue);
+    useEffect(() => { setCountSt(settings.minValue) }, [settings])
+    const toInc = (): void => {
+        if (countSt < settings.maxValue) setCountSt(countSt + 1)
     }
-    const toReset = () => setCountSt(settings.minValue)
+    const toReset = (): void => setCountSt(settings.minValue)
     return (
         <div className={s.counterWindow} >
             <CounterDisplay

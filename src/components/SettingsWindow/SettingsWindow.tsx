@@ -17,13 +17,13 @@ export const SettingsWindow = ({
     setNumberOrTextMode,
     setErrorSt,
     setCountBtnsDisable
-}: PropsType) => {
-    const [isDisabled, setIsDisabled] = useState(true)
-    const [minValue, setMinValue] = useState(settings.minValue)
-    const [maxValue, setMaxValue] = useState(settings.maxValue)
+}: PropsType): JSX.Element => {
+    const [isDisabled, setIsDisabled] = useState<boolean>(true)
+    const [minValue, setMinValue] = useState<number>(settings.minValue)
+    const [maxValue, setMaxValue] = useState<number>(settings.maxValue)
 
-    const onMaxInputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        let value = Number(e.currentTarget.value);
+    const onMaxInputChangeHandler = (e: ChangeEvent<HTMLInputElement>): void => {
+        let value: number = Number(e.currentTarget.value);
         if (value < minValue) return;
 
         setMaxValue(value);
@@ -34,8 +34,8 @@ export const SettingsWindow = ({
         setCountBtnsDisable(true)
     }
 
-    const onMinInputChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        let value = Number(e.currentTarget.value);
+    const onMinInputChangeHandler = (e: ChangeEvent<HTMLInputElement>): void => {
+        let value: number = Number(e.currentTarget.value);
         if (value > maxValue) return;
         if (value < 0) value = -1;
 
@@ -47,7 +47,7 @@ export const SettingsWindow = ({
         setCountBtnsDisable(true)
     }
 
-    const toSet = () => {
+    const toSet = (): void => {
         setSettingsCallback(maxValue, minValue)
         setNumberOrTextMode(true)
         setCountBtnsDisable(false);

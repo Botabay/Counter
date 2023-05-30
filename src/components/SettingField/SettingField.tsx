@@ -13,7 +13,7 @@ export const SettingField = ({
     onInputChangeHandler,
     value,
     localErrorS,
-}: PropsType) => {
+}: PropsType): JSX.Element => {
     return (
         <div className={s.field + ' ' + (localErrorS && s.error)}
         > {/*bad adding errorClass*/}

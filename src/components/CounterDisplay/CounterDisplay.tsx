@@ -13,10 +13,10 @@ export const CounterDisplay = ({
     currentValue,
     numberOrTextMode,
     errorSt
-}: PropsType) => {
+}: PropsType): JSX.Element => {
     const GOOD_MESSAGE = 'enter values and press "set"'
     const WRONG_MESSAGE = 'incorrect value!'
-    const isSupremed = currentValue <= settings.minValue ||
+    const isSupremed: boolean = currentValue <= settings.minValue ||
         currentValue >= settings.maxValue
     return (
         <>

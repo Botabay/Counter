@@ -8,7 +8,7 @@ type PropsType = {
 export const Input = ({
     onChange,
     value,
-}: PropsType) => {
+}: PropsType):JSX.Element => {
     return (
         <input
             type="number"
