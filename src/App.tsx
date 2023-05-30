@@ -14,14 +14,10 @@ export const App = (): JSX.Element => {
         minValue: localStorageSettings.minValue,
         maxValue: localStorageSettings.maxValue
     });
-    //show number or message
-    // const [numberOrTextMode, setNumberOrTextMode] = useState<boolean>(true)
     const [showSettings, setShowSettings] = useState<boolean>(false);
     const showSettingsCallback = () => setShowSettings(!showSettings)
     //show messages when we are editing to settings
     const [errorSt, setErrorSt] = useState<boolean>(false)
-    //disability of buttons(inc+reset)
-    const [countBtnsDisable, setCountBtnsDisable] = useState<boolean>(false);
     const setSettingsCallback = (max: number, min: number): void =>
         setSettings({ ...settings, maxValue: max, minValue: min })
     return (
@@ -30,16 +26,12 @@ export const App = (): JSX.Element => {
                 <SettingsWindow
                     settings={settings}
                     setSettingsCallback={setSettingsCallback}
-                    setCountBtnsDisable={(v) => setCountBtnsDisable(v)}
-                    // setNumberOrTextMode={(v) => setNumberOrTextMode(v)}
                     setErrorSt={(v) => setErrorSt(v)}
                     showSettingsCallback={showSettingsCallback}
                 /> :
                 <CounterWindow
                     settings={settings}
-                    // numberOrTextMode={numberOrTextMode}
                     errorSt={errorSt}
-                    countBtnsDisable={countBtnsDisable}
                     showSettingsCallback={showSettingsCallback}
                 />}
         </div>

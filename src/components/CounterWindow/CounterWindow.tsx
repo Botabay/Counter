@@ -6,17 +6,13 @@ import s from './CounterWindow.module.css'
 
 type PropsType = {
     settings: CountType
-    // numberOrTextMode: boolean
     errorSt: boolean
-    countBtnsDisable: boolean
-    showSettingsCallback:()=>void
+    showSettingsCallback: () => void
 }
 
 export const CounterWindow = ({
     settings,
-    // numberOrTextMode,
     errorSt,
-    countBtnsDisable,
     showSettingsCallback
 }: PropsType): JSX.Element => {
     const [countSt, setCountSt] = useState<number>(settings.minValue);
@@ -30,19 +26,18 @@ export const CounterWindow = ({
             <CounterDisplay
                 settings={settings}
                 currentValue={countSt}
-                // numberOrTextMode={numberOrTextMode}
                 errorSt={errorSt}
             />
             <div>
                 <Button
                     name={'inc'}
                     onClick={toInc}
-                    disabled={countSt >= settings.maxValue || countBtnsDisable}
+                    disabled={countSt >= settings.maxValue}
                 />
                 <Button
                     name={'reset'}
                     onClick={toReset}
-                    disabled={countSt === settings.minValue || countBtnsDisable}
+                    disabled={countSt === settings.minValue}
                 />
                 <Button
                     name={'set'}

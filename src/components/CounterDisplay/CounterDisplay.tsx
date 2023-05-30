@@ -4,14 +4,12 @@ import s from './CounterDisplay.module.css'
 type PropsType = {
     settings: CountType
     currentValue: number
-    // numberOrTextMode: boolean
     errorSt: boolean
 }
 
 export const CounterDisplay = ({
     settings,
     currentValue,
-    // numberOrTextMode,
     errorSt
 }: PropsType): JSX.Element => {
     const GOOD_MESSAGE = 'enter values and press "set"'
@@ -20,16 +18,9 @@ export const CounterDisplay = ({
         currentValue >= settings.maxValue
     return (
         <>
-            {
-                // numberOrTextMode ?
-                true?
-                    <div className={s.based + ' ' + (isSupremed && s.red)}>
-                        {currentValue}
-                    </div> :
-                    <div className={errorSt ? s.based + ' ' + s.red : s.based}>
-                        {errorSt ? WRONG_MESSAGE : GOOD_MESSAGE}
-                    </div>
-            }
+            <div className={s.based + ' ' + (isSupremed && s.red)}>
+                {currentValue}
+            </div>
         </>
     )
 }
