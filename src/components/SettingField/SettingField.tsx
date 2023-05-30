@@ -15,10 +15,7 @@ export const SettingField = ({
     localErrorS,
 }: PropsType) => {
     return (
-        <div
-            className={s.field
-                + ' ' + (localErrorS ? s.error : '')
-            }
+        <div className={s.field + ' ' + (localErrorS && s.error)}
         > {/*bad adding errorClass*/}
             <span>{text}</span>
             <Input

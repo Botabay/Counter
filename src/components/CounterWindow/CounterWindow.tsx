@@ -1,6 +1,6 @@
 import { CountType } from "../../App"
 import { Button } from "./../Button/Button"
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { CounterDisplay } from "../CounterDisplay/CounterDisplay"
 import s from './CounterWindow.module.css'
 
@@ -18,10 +18,11 @@ export const CounterWindow = ({
     countBtnsDisable
 }: PropsType) => {
     const [countSt, setCountSt] = useState(settings.minValue);
+    useEffect(()=>{setCountSt(settings.minValue)},[settings])
     const toInc = () => {
         if (countSt <= settings.maxValue) setCountSt(countSt+1)
     }
-    const toReset = () => setCountSt(0)
+    const toReset = () => setCountSt(settings.minValue)
     return (
         <div className={s.counterWindow} >
             <CounterDisplay
@@ -34,7 +35,7 @@ export const CounterWindow = ({
                 <Button
                     name={'inc'}
                     onClick={toInc}
-                    disabled={countSt === settings.maxValue || countBtnsDisable}
+                    disabled={countSt >= settings.maxValue || countBtnsDisable}
                 />
                 <Button
                     name={'reset'}

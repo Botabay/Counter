@@ -16,8 +16,8 @@ export const CounterDisplay = ({
 }: PropsType) => {
     const GOOD_MESSAGE = 'enter values and press "set"'
     const WRONG_MESSAGE = 'incorrect value!'
-    const isSupremed = currentValue === settings.minValue ||
-        currentValue === settings.maxValue
+    const isSupremed = currentValue <= settings.minValue ||
+        currentValue >= settings.maxValue
     return (
         <>
             {

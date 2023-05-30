@@ -8,7 +8,6 @@ type PropsType = {
     settings: CountType
     setSettingsCallback: (max: number, min: number) => void
     setNumberOrTextMode: (v: boolean) => void
-    errorSt: boolean
     setErrorSt: (v: boolean) => void
     setCountBtnsDisable: (v: boolean) => void
 }
@@ -16,10 +15,10 @@ export const SettingsWindow = ({
     settings,
     setSettingsCallback,
     setNumberOrTextMode,
-    errorSt,
     setErrorSt,
     setCountBtnsDisable
 }: PropsType) => {
+    const [isDisabled, setIsDisabled] = useState(true)
     const [minValue, setMinValue] = useState(settings.minValue)
     const [maxValue, setMaxValue] = useState(settings.maxValue)
 
@@ -29,6 +28,7 @@ export const SettingsWindow = ({
 
         setMaxValue(value);
         setErrorSt(value === minValue || minValue < 0);
+        setIsDisabled(value === minValue || minValue < 0)
 
         setNumberOrTextMode(false)
         setCountBtnsDisable(true)
@@ -41,6 +41,7 @@ export const SettingsWindow = ({
 
         setMinValue(value)
         setErrorSt(value < 0 || value === maxValue || maxValue === 0);
+        setIsDisabled(value < 0 || value === maxValue || maxValue === 0);
 
         setNumberOrTextMode(false)
         setCountBtnsDisable(true)
@@ -50,12 +51,12 @@ export const SettingsWindow = ({
         setSettingsCallback(maxValue, minValue)
         setNumberOrTextMode(true)
         setCountBtnsDisable(false);
-        // window.localStorage.setItem('counterSettings', JSON.stringify(values));
+        setIsDisabled(true)
+        window.localStorage.setItem('counterSettings', JSON.stringify({ minValue, maxValue }));
     }
-    let minlocalErrorS = (minValue < 0) ? true : false;//bad adding errorClass
 
     return (
-        <div className={s.settingsWindow}>
+        <div className={s.settingsWindow + ' ' + (maxValue === minValue && s.error)}>
             <SettingField
                 text={'max value:'}
                 onInputChangeHandler={onMaxInputChangeHandler}
@@ -65,10 +66,10 @@ export const SettingsWindow = ({
                 text={'min value:'}
                 onInputChangeHandler={onMinInputChangeHandler}
                 value={minValue}
-                localErrorS={minlocalErrorS}
+                localErrorS={minValue < 0}
             />
             <div>
-                <Button name={'set'} onClick={toSet} disabled={errorSt} />
+                <Button name={'set'} onClick={toSet} disabled={isDisabled} />
             </div>
         </div>
     )
