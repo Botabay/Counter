@@ -1,5 +1,5 @@
 import { CountType } from '../App';
-import { v1 } from 'uuid';
+import { loadState } from '../localStorage/localStorage';
 
 export type settingsActionType = {
     type: string
@@ -9,18 +9,23 @@ export type settingsActionType = {
 
 type ActionsType = settingsActionType
 
-const initialState: CountType = {maxValue:1,minValue:0}
+// const initialState: CountType = {  } //does not work,why
 
-export const settingsReducer = (state=initialState, action: ActionsType): CountType => {
+// const persistedState = loadState();
+
+const initialState: CountType = loadState() || {};
+
+export const settingsReducer = (
+    state = initialState,
+    action: ActionsType
+): CountType => {
     switch (action.type) {
         case 'SET-SETTINGS': {
-            
-            return {minValue:action.min,maxValue:action.max}
+            return { minValue: action.min, maxValue: action.max }
         }
-        
         default:
             return state;
-            // throw new Error("I don't understand this type")
+        // throw new Error("I don't understand this type")
     }
 }
 

@@ -1,9 +1,9 @@
 import { combineReducers, createStore, legacy_createStore } from 'redux'
-import { loadState, saveState } from '../localStorage/localStorage';
+import { saveState } from '../localStorage/localStorage';
 import { settingsReducer } from './settings-reducer';
 
 const rootReducer = combineReducers({
-    settigs: settingsReducer
+    settings: settingsReducer
 })
 
 // const persistedState = loadState();
@@ -17,12 +17,13 @@ const rootReducer = combineReducers({
 //   });
 // });
 
-const persistedState = loadState();
-export const store = legacy_createStore(rootReducer, persistedState)
+// const persistedState = loadState();
+// export const store = legacy_createStore(rootReducer, persistedState)//??
+export const store = legacy_createStore(rootReducer)
 store.subscribe(() => {
     saveState({
-        minValue: store.getState().settigs.minValue,
-        maxValue: store.getState().settigs.minValue
+        minValue: store.getState().settings.minValue,
+        maxValue: store.getState().settings.maxValue
     });
 });
 

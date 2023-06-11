@@ -6,6 +6,7 @@ import s from './SettingsWindow.module.css'
 import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { settingsAC } from '../../state/settings-reducer'
+import { AppRootStateType } from '../../state/store'
 
 type PropsType = {
     // settings: CountType
@@ -23,7 +24,7 @@ export const SettingsWindow = ({
 }: PropsType): JSX.Element => {
     const [isDisabled, setIsDisabled] = useState<boolean>(true)
 
-    const settings = useSelector<CountType, CountType>(s => s)
+    const settings = useSelector<AppRootStateType, CountType>(s => s.settings)
     const dispatch = useDispatch();
 
     const [minValue, setMinValue] = useState<number>(settings.minValue)

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react'
 import { CounterDisplay } from "../CounterDisplay/CounterDisplay"
 import s from './CounterWindow.module.css'
 import { useSelector } from "react-redux"
+import { AppRootStateType } from "../../state/store"
 
 type PropsType = {
     // settings: CountType
@@ -18,7 +19,7 @@ export const CounterWindow = ({
     errorSt,
     countBtnsDisable
 }: PropsType): JSX.Element => {
-    const settings = useSelector<CountType, CountType>(s => s)
+    const settings = useSelector<AppRootStateType, CountType>(s => s.settings)
 
     const [countSt, setCountSt] = useState<number>(settings.minValue);
     useEffect(() => { setCountSt(settings.minValue) }, [settings])
@@ -29,7 +30,7 @@ export const CounterWindow = ({
     return (
         <div className={s.counterWindow} >
             <CounterDisplay
-                settings={settings}
+                // settings={settings}
                 currentValue={countSt}
                 numberOrTextMode={numberOrTextMode}
                 errorSt={errorSt}
