@@ -3,25 +3,33 @@ import { Button } from './../Button/Button'
 import { CountType } from './../../App'
 import { SettingField } from './../SettingField/SettingField'
 import s from './SettingsWindow.module.css'
+import { useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { settingsAC } from '../../state/settings-reducer'
 
 type PropsType = {
-    settings: CountType
-    setSettingsCallback: (max: number, min: number) => void
+    // settings: CountType
+    // setSettingsCallback: (max: number, min: number) => void
     setNumberOrTextMode: (v: boolean) => void
     setErrorSt: (v: boolean) => void
     setCountBtnsDisable: (v: boolean) => void
 }
 export const SettingsWindow = ({
-    settings,
-    setSettingsCallback,
+    // settings,
+    // setSettingsCallback,
     setNumberOrTextMode,
     setErrorSt,
     setCountBtnsDisable
 }: PropsType): JSX.Element => {
     const [isDisabled, setIsDisabled] = useState<boolean>(true)
+
+    const settings = useSelector<CountType, CountType>(s => s)
+    const dispatch = useDispatch();
+
     const [minValue, setMinValue] = useState<number>(settings.minValue)
     const [maxValue, setMaxValue] = useState<number>(settings.maxValue)
 
+    
     const onMaxInputChangeHandler = (e: ChangeEvent<HTMLInputElement>): void => {
         let value: number = Number(e.currentTarget.value);
         if (value < minValue) return;
@@ -48,7 +56,8 @@ export const SettingsWindow = ({
     }
 
     const toSet = (): void => {
-        setSettingsCallback(maxValue, minValue)
+        // setSettingsCallback(maxValue, minValue)
+        dispatch(settingsAC(maxValue, minValue))
         setNumberOrTextMode(true)
         setCountBtnsDisable(false);
         setIsDisabled(true)
