@@ -7,18 +7,15 @@ import { useSelector } from 'react-redux'
 import { useDispatch } from 'react-redux'
 import { settingsAC } from '../../state/settings-reducer'
 import { AppRootStateType } from '../../state/store'
+import { numberOrTextModeTrueAC } from '../../state/numberOrTextMode-reducer'
 
 type PropsType = {
-    // settings: CountType
-    // setSettingsCallback: (max: number, min: number) => void
-    setNumberOrTextMode: (v: boolean) => void
+    // setNumberOrTextMode: (v: boolean) => void
     setErrorSt: (v: boolean) => void
     setCountBtnsDisable: (v: boolean) => void
 }
 export const SettingsWindow = ({
-    // settings,
-    // setSettingsCallback,
-    setNumberOrTextMode,
+    // setNumberOrTextMode,
     setErrorSt,
     setCountBtnsDisable
 }: PropsType): JSX.Element => {
@@ -39,7 +36,7 @@ export const SettingsWindow = ({
         setErrorSt(value === minValue || minValue < 0);
         setIsDisabled(value === minValue || minValue < 0)
 
-        setNumberOrTextMode(false)
+        dispatch(numberOrTextModeTrueAC(false))
         setCountBtnsDisable(true)
     }
 
@@ -52,14 +49,13 @@ export const SettingsWindow = ({
         setErrorSt(value < 0 || value === maxValue || maxValue === 0);
         setIsDisabled(value < 0 || value === maxValue || maxValue === 0);
 
-        setNumberOrTextMode(false)
+        dispatch(numberOrTextModeTrueAC(false))
         setCountBtnsDisable(true)
     }
 
     const toSet = (): void => {
-        // setSettingsCallback(maxValue, minValue)
         dispatch(settingsAC(maxValue, minValue))
-        setNumberOrTextMode(true)
+        dispatch(numberOrTextModeTrueAC(true))
         setCountBtnsDisable(false);
         setIsDisabled(true)
         window.localStorage.setItem('counterSettings', JSON.stringify({ minValue, maxValue }));

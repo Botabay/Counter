@@ -1,9 +1,11 @@
 import { combineReducers, createStore, legacy_createStore } from 'redux'
 import { saveState } from '../localStorage/localStorage';
 import { settingsReducer } from './settings-reducer';
+import { numberOrTextModeReducer } from './numberOrTextMode-reducer';
 
 const rootReducer = combineReducers({
-    settings: settingsReducer
+    settings: settingsReducer,
+    numberOrTextMode: numberOrTextModeReducer
 })
 
 // const persistedState = loadState();
@@ -28,6 +30,7 @@ store.subscribe(() => {
 });
 
 export type AppRootStateType = ReturnType<typeof rootReducer>
+
 
 // import throttle from 'lodash.throttle';
 // ...

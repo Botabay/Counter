@@ -13,7 +13,7 @@ type ActionsType = settingsActionType
 
 // const persistedState = loadState();
 
-const initialState: CountType = loadState() || {};
+const initialState: CountType = loadState() || { } as CountType;
 
 export const settingsReducer = (
     state = initialState,

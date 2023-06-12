@@ -4,21 +4,20 @@ import s from './CounterDisplay.module.css'
 import { AppRootStateType } from '../../state/store'
 
 type PropsType = {
-    // settings: CountType
     currentValue: number
-    numberOrTextMode: boolean
+    // numberOrTextMode: boolean
     errorSt: boolean
 }
 
 export const CounterDisplay = ({
-    // settings,
     currentValue,
-    numberOrTextMode,
+    // numberOrTextMode,
     errorSt
 }: PropsType): JSX.Element => {
     const GOOD_MESSAGE = 'enter values and press "set"'
     const WRONG_MESSAGE = 'incorrect value!'
     const settings = useSelector<AppRootStateType, CountType>(s => s.settings)
+    const numberOrTextMode = useSelector<AppRootStateType,boolean>(s=>s.numberOrTextMode)
     const isSupremed: boolean = currentValue <= settings.minValue ||
         currentValue >= settings.maxValue
     return (
